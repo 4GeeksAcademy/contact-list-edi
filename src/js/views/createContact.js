@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "../../styles/demo.css";
 
-export const Demo = () => {
+
+const CreateContactPage = () => {
 	const { store, actions } = useContext(Context);
 	const [nombre,setNombre] = useState("")
 	const [email,setEmail] = useState("")
@@ -21,7 +21,7 @@ export const Demo = () => {
 	};
 
 	return (
-		<div className="container">
+		<div className="container mt-5">
 			<h1 className="text-center">Add a new contact</h1>
 			<div className="col-12 ">
 
@@ -68,10 +68,10 @@ export const Demo = () => {
 			</form>
 			<br/>
 
-			<Link to="/">
-				<button className="btn btn-primary mt-2">Back home</button>
-			</Link>
+			<Link style={{textDecoration: "none"}} to="/">or back home</Link>
 			</div>
 		</div>
 	);
 };
+
+export default CreateContactPage;

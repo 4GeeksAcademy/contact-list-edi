@@ -1,43 +1,85 @@
+import { useState } from "react";
+
 const getState = ({ getStore, getActions, setStore }) => {
+
 	return {
 		store: {
-			demo: [
+			contact: 
 				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
+					full_name:null ,
+					email:null,
+					phone:null,
+					address: null,
+					agenda_slug: "edi_agenda",
 				}
-			]
+			,
+			listnames : [],
+			agenda_slug: "edi_agenda"
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			cambiarNombre: (name) =>{
+				setStore({nombre: name})
 			},
 			loadSomeData: () => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
+			addContact : (nombre,email,phone,adress) =>{
+				const store= getStore()
+				store.contact.full_name= nombre,
+				store.contact.email=email,
+				store.contact.phone=phone,
+				store.contact.address=adress
+				// console.log(getStore().contact);
+			},
+			createContact: () =>{
+				const store= getStore()
+				fetch('https://assets.breatheco.de/apis/fake/contact/', {
+					method: 'POST', 
+					headers:{
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(store.contact),
+					}).then((res)=> res.json())
+					.then(resAsJson => {
+						console.log(resAsJson);
+						return resAsJson.id, // Devuelve el ID del contacto creado
+						console.log(resAsJson.id);
+					}).catch((error)=>{
+						console.log(error);
+					})
+			},
+			
+			showContacts: (contactId) =>{
+					fetch(`https://assets.breatheco.de/apis/fake/contact/${contactId}`, {
+						method: 'GET', 
+						headers:{
+							'Content-Type': 'application/json'
+						},
+						}).then((res)=> res.json())
+						.then(resAsJson => {
+							console.log(resAsJson);
+						}).catch((error)=>{
+							console.log(error);
+						})	
+			},
+			deleteContact:  (contactId) =>{
+				fetch('https://assets.breatheco.de/apis/fake/contact/' + contactId, {
+					method: 'DELETE', 
+					headers:{
+						'Content-Type': 'application/json'
+					}
+					}).then((res)=> res.json())
+					.then(resAsJson => {
+						console.log(resAsJson);
+						getAllContacts()
+					}).catch((error)=>{
+						console.log(error);
+					})
 			}
+
 		}
 	};
 };
