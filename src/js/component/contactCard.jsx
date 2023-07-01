@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ContactCard =(props)=>{
    
+   const navigate = useNavigate()
     return( 
         <div className="container-fluid d-flex justify-content-center mt-5">
             <div class="card mb-3 col-11">
@@ -20,7 +22,7 @@ const ContactCard =(props)=>{
                     </div>
                     <div class="col-md-2 ">
                         <i class="fas fa-trash-alt" onClick={props.delete}></i>
-                        <i class="fas fa-pencil-alt mx-5 mt-4" onClick={props.edit}></i>
+                        <i class="fas fa-pencil-alt mx-5 mt-4" onClick={ () =>{navigate("/editContact/" + props.id )}}></i>
                     </div>
                 </div>
             </div>

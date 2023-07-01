@@ -13,13 +13,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					agenda_slug: "edi_agenda",
 				}
 			,
-			listnames : [],
+			contactList: [],
 			agenda_slug: "edi_agenda"
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			cambiarNombre: (name) =>{
-				setStore({nombre: name})
+			addContactList: (arr) =>{
+				const store= getStore()
+				setStore({contactList: [...store.contactList, arr]})
 			},
 			loadSomeData: () => {
 				/**
@@ -32,7 +32,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				store.contact.email=email,
 				store.contact.phone=phone,
 				store.contact.address=adress
-				// console.log(getStore().contact);
 			},
 			createContact: () =>{
 				const store= getStore()

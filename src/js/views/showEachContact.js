@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/home.css";
 import { useParams } from "react-router";
+import { Context } from "../store/appContext";
+
 
 const ShowEachContact = () => {
 
+    const {store,actions} = useContext(Context)
     const params = useParams();
     const [contact, setContact] = useState()
 
     useEffect(() => {
         fetchSingleContact();
+        console.log(store.contactList);
     },[])
 
 
@@ -48,6 +52,7 @@ const ShowEachContact = () => {
                     <span class="visually-hidden">Loading...</span>
                 </div>
             )}
+
         </div>
     )
 };

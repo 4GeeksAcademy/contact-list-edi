@@ -11,7 +11,7 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 	const [contactList, setContactList] = useState([])
 	const navigate = useNavigate()
-	
+
 	const getAllContacts=() =>{
 		fetch('https://assets.breatheco.de/apis/fake/contact/agenda/' + store.agenda_slug, {
 			method: 'GET', 
@@ -41,9 +41,10 @@ export const Home = () => {
 				console.log(error);
 			})
     }
-
+	
 	useEffect(()=>{
-		getAllContacts()
+		getAllContacts(),
+		actions.addContactList(contactList)
 	},[])
 
 	const showContact = () =>{
@@ -51,7 +52,6 @@ export const Home = () => {
 			return(
 					<li key={index}> 
 						<ContactCard delete={() => deleteContact(item.id)}
-									  edit={()=> editContact(item.id)}
 									  id={item.id}
 									  name={item.full_name} phone={item.phone} 
 									  email={item.email} adress={item.address}  
